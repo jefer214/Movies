@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controle="clr-namespace:dotMorten.Xamarin.Forms;assembly=dotMorten.Xamarin.Forms.AutoSuggestBox"
+    xmlns:local="clr-namespace:Movies.ViewModels"
+    xmlns:ffimg="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    mc:Ignorable="d"
+    x:Class="Movies.MainPage">
+
+    <ContentPage.BindingContext>
+        <local:MainViewModel />
+    </ContentPage.BindingContext>
+
+    <StackLayout
+        Margin="10">
+
+        <!-- TITLE -->
+        <Frame
+            BackgroundColor="{StaticResource MainColor}"
+            Margin="0">
+
+            <StackLayout
+                Orientation="Horizontal">
+            <Label
+                FontAttributes="Bold"
+                FontSize="Large"
+                Text="{Binding Text_Title}"
+                TextColor="White"/>
+
+            <Label 
+                                FontSize="Small" 
+                                HorizontalOptions="EndAndExpand"
+                                Text="{Binding Count, StringFormat='Cantidad de Items: {0}'}" 
+                                TextColor="LightGray"
+                                VerticalOptions="End"/>
+            </StackLayout>
+        </Frame>
+
+        <!-- AUTOMATIC SUGGESTION BOX -->
+
+        <controle:AutoSuggestBox 
+                PlaceholderText="{Binding Text_DescriptionSearch}"
+                WidthRequest="200"
+                TextChanged="AutoSuggestBox_TextChanged"
+                SuggestionChosen="AutoSuggestBox_SuggestionChosen"/>
+        
+        <!-- LIST MOVIES -->
+        
+        <CollectionView 
+                ItemsSource="{Binding MovieItems}"
+                SelectionMode="Single"
+                SelectedItem="{Binding SelectedMovie}">
+
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout  
+                    HorizontalItemSpacing="20"
+                    Orientation="Vertical"
+                    Span="2" 
+                    VerticalItemSpacing="10"/>
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame
+                            CornerRadius="5"
+                            IsClippedToBounds="True"
+                            Padding="0">
+
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="260" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <!-- MAIN IMAGE -->
+                            
+                            <ffimg:CachedImage
+                                   Aspect="AspectFill"
+                                   Grid.Row="0"
+                                   HorizontalOptions="FillAndExpand"
+                                   Source="{Binding Poster}">
+                            </ffimg:CachedImage>
+
+                            <BoxView 
+                                    BackgroundColor="Black" 
+                                    Grid.Row="0"
+                                    HeightRequest="20"
+                                    Opacity="0.6" 
+                                    VerticalOptions="End"/>
+
+                            <Label 
+                                    FontAttributes="Bold"
+                                    Grid.Row="0"
+                                    Margin="7,0,0,3"
+                                    Text="{Binding Title}" 
+                                    TextColor="White"
+                                    VerticalOptions="EndAndExpand"/>
+
+                            <Label 
+                                FontSize="Small" 
+                                Grid.Row="1"
+                                Text="{Binding Year, StringFormat='Año: {0}'}" 
+                                TextColor="Black"
+                                VerticalOptions="Start"/>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </StackLayout>
+
+</ContentPage>

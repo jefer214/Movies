@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<pages:PopupPage 
+    xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+    xmlns:animation="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+    xmlns:ffimg="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    mc:Ignorable="d"
+    x:Class="Movies.Views.PopUpMovieView">
+
+    <pages:PopupPage.Animation>
+        <animation:ScaleAnimation
+            DurationIn="400"
+            DurationOut="300"
+            EasingIn="SinOut"
+            EasingOut="SinIn"
+            HasBackgroundAnimation="True"
+            PositionIn="Center"
+            PositionOut="Center"
+            ScaleIn="1.2"
+            ScaleOut="0.8" />
+
+    </pages:PopupPage.Animation>
+      <StackLayout
+          BackgroundColor="WhiteSmoke"
+          HorizontalOptions="Center"
+          Margin="12"
+          Padding="20"
+          VerticalOptions="Center">
+
+        <!-- TITLE -->
+        <Frame
+            BackgroundColor="{StaticResource MainColor}"
+            Margin="0">
+
+            <Label
+                FontAttributes="Bold"
+                FontSize="Large"
+                Text="{Binding SelectedMovie.Title}" 
+                TextColor="White"/>
+
+        </Frame>
+
+        <!-- MAIN IMAGE -->
+
+        <ffimg:CachedImage
+                                   Aspect="AspectFill"
+                                   Grid.Row="0"
+                                   HorizontalOptions="FillAndExpand"
+                                   Source="{Binding SelectedMovie.Poster}">
+        </ffimg:CachedImage>
+
+        <Label 
+                                FontSize="Small" 
+                                Text="{Binding SelectedMovie.Year, StringFormat='Año: {0}'}" 
+                                TextColor="Black"
+                                VerticalOptions="Start"/>
+
+        <Label 
+                                FontSize="Small" 
+                                Text="{Binding SelectedMovie.Type, StringFormat='Tipo: {0}'}}" 
+                                TextColor="Black"
+                                VerticalOptions="Start"/>
+          
+        <Button
+            BackgroundColor="{StaticResource MainColor}"
+            Clicked="Button_OnClicked"
+            CornerRadius="10"
+            FontSize="Medium"
+            HeightRequest="40"
+            Text="Volver"
+            TextColor="White" />
+
+    </StackLayout>
+</pages:PopupPage>
